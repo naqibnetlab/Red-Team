@@ -11,7 +11,7 @@ ping <IP>            # used to test the conectivity
 ## 1. Nmap
 - **Nmap syntax**
 ```
-
+nmap <scan-types> <options> <target>
 ```
 
 ## 2. SMB Enum
