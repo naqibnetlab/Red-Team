@@ -75,8 +75,27 @@ xsltproc target_scan.xml –o target_scan.html
 ```
 
 ## 2. SMB Enum
+### NetExec
+  - Syntax
 ```
+nxc <protocol> <ip address> <options>
+```
+  - NetExec User Enumeration 
+```
+nxc smb 10.129.2.28 –u '' –p '' –-rid-brute                        # use this if you don't know about any existing users
+nxc smb 10.129.2.28 –u 'Guest' –p '' –-rid-brute                   # use the command with the Guest default account if the first command didn't work
+nxc smb 10.129.2.28 –u 'john' –p 'Pass123' –-rid-brute             # use this if you know a username and it's password on the target
+```
+  - NetExec Share Enumeration
+```
+Note: If you know a valid username and password on the target machine, use those credentials instead of Guest with no password.
 
+nxc smb 10.129.2.28 -u 'Guest' -p '' --shares                      # list available SMB shares
+nxc smb 10.129.2.28 -u 'Guest' -p '' -M spider_plus                # enumerate shares and collect detailed information using spider_plus module
+nxc smb 10.129.2.28 -u 'Guest' -p '' --spider all --pattern txt    # download all .txt files from all accessible shares
+```
+### enum4linux
+```
 ```
 
 ## 3. GoBuster
