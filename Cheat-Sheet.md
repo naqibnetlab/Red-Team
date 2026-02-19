@@ -1,5 +1,5 @@
 # Section 1. Linux Basics
-## 1. ping
+- ping
 ```
 ping <IP>            # used to test the conectivity
 ```
