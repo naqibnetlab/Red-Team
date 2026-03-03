@@ -2,7 +2,7 @@
 ## 1. nmap
 - **Nmap Recommended Scans**
 ```
-sudo nmap –A --script vuln –vv –p-–oX target_scan.xml –iL hosts.txt
+sudo nmap –A --script vuln –vv –p- -oX target_scan.xml –iL hosts.txt
 
 -A means –sV –sC –O
 -vv means verbose output
