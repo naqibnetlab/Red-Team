@@ -94,13 +94,51 @@ nxc smb 10.129.2.28 -u 'Guest' -p '' --shares                      # list availa
 nxc smb 10.129.2.28 -u 'Guest' -p '' -M spider_plus                # enumerate shares and collect detailed information using spider_plus module
 nxc smb 10.129.2.28 -u 'Guest' -p '' --spider all --pattern txt    # download all .txt files from all accessible shares
 ```
+ - NXC SMB/RDP Password Attacks
+```
+ nxc smb 10.129.2.28 -u users.txt -p /usr/share/wordlists/rockyou.txt –-ignore-pw-decoding
+
+-u (path to users file)
+-p (path to wordlist)
+--ignore-pw-decoding (required to work with rockyou.txt)
+```
 ### enum4linux
 ```
+sudo enum4linux -a -A 192.168.220.30
 ```
-
+### smbclient
+```
+smbclient -U <username> //<ip>/<share>
+Example: smbclient -U student //10.5.10.30/po-shares
+```
 ## 3. GoBuster
 ```
+Syntax:
+gobuster [mode] -u [target ip] -w [wordlist]
+
+Example:
+gobuster dir -u http://10.20.10.31 -w /usr/share/wordlists/seclists/Discovery/Web-Content/common.txt
 
 ```
+# Section 3. Weaponization
+```
+COMING SOON...
+```
+# Section 4. Delivery
+```
+COMING SOON...
+```
+# Section 5. Privilege Escalation
+```
+COMING SOON...
+```
+# Section 6. Miscellaneous
+### Wordlists
+```
+/usr/share/wordlists/rockyou.txt                                  # Password Cracking Wordlist
+/usr/share/wordlists/seclists/Discovery/Web-Content/common.txt    # Wordlist for discovering hidden directories/files
+/usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt      # Wordlist for discovering hidden directories/files
+```
+
 
 
