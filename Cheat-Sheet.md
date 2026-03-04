@@ -94,6 +94,11 @@ nxc smb 10.129.2.28 -u 'Guest' -p '' --shares                      # list availa
 nxc smb 10.129.2.28 -u 'Guest' -p '' -M spider_plus                # enumerate shares and collect detailed information using spider_plus module
 nxc smb 10.129.2.28 -u 'Guest' -p '' --spider all --pattern txt    # download all .txt files from all accessible shares
 ```
+ - NetExec Group Enumeration
+```
+nxc ldap <DC-IP> -u <user> -p <password> --group                   # List all groups
+nxc ldap <DC-IP> -u <user> -p <password> --group "Domain Admins"   # List members of the Domain Admins group
+```
  - NXC SMB/RDP Password Attacks
 ```
  nxc smb 10.129.2.28 -u users.txt -p /usr/share/wordlists/rockyou.txt –-ignore-pw-decoding
