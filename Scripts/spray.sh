@@ -10,6 +10,13 @@ print_help() {
     echo "-a  attempts before sleep to prevent lockout"
     echo "-l  lockout reset minutes"
     echo "-h  show this help message"
+
+    echo ""
+    echo "Output:"
+    echo "  [+] indicates valid credentials."
+    echo "  Valid credentials are saved in: valid_creds.txt"
+
+    echo ""
     exit 0
 }
 
