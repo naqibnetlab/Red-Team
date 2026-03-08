@@ -13,7 +13,8 @@ print_help() {
     exit 0
 }
 
-while getopts "t:d:u:p:a:l:h" opt; do
+# parse options
+while getopts ":t:d:u:p:a:l:h" opt; do
     case $opt in
         t) TARGET=$OPTARG ;;
         d) DOMAIN=$OPTARG ;;
@@ -22,9 +23,21 @@ while getopts "t:d:u:p:a:l:h" opt; do
         a) MAX_ATTEMPTS=$OPTARG ;;
         l) LOCKOUT_MIN=$OPTARG ;;
         h) print_help ;;
-        *) print_help ;;
+        :)  # missing argument for a flag
+            echo "Error: Option -$OPTARG requires a value"
+            print_help ;;
+        \?) # invalid option
+            echo "Error: Invalid option -$OPTARG"
+            print_help ;;
     esac
 done
+
+# check for required flags
+if [ -z "$TARGET" ] || [ -z "$DOMAIN" ] || [ -z "$USERFILE" ] || \
+   [ -z "$PASSFILE" ] || [ -z "$MAX_ATTEMPTS" ] || [ -z "$LOCKOUT_MIN" ]; then
+    echo "Error: Missing required arguments"
+    print_help
+fi
 
 BUFFER=30
 LOCKOUT_SEC=$((LOCKOUT_MIN * 60 + BUFFER))
