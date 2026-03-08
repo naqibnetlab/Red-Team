@@ -1,13 +1,13 @@
 #!/bin/bash
 
 print_help() {
-    echo "Usage: $0 -t target -d domain -u users -p passwords -a attempts -l lockout_minutes"
+    echo "Usage: $0 -t target -d domain -u users-file.txt -p passwords-list.txt -a attempts -l lockout_minutes"
     echo ""
     echo "-t  target address"
     echo "-d  domain name"
     echo "-u  users file"
     echo "-p  password file"
-    echo "-a  attempts before sleep"
+    echo "-a  attempts before sleep to prevent lockout"
     echo "-l  lockout reset minutes"
     echo "-h  show this help message"
     exit 0
