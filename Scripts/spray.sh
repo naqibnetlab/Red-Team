@@ -1,11 +1,30 @@
 #!/bin/bash
 
-TARGET=$1
-DOMAIN=$2
-USERFILE=$3
-PASSFILE=$4
-MAX_ATTEMPTS=$5
-LOCKOUT_MIN=$6
+print_help() {
+    echo "Usage: $0 -t target -d domain -u users -p passwords -a attempts -l lockout_minutes"
+    echo ""
+    echo "-t  target address"
+    echo "-d  domain name"
+    echo "-u  users file"
+    echo "-p  password file"
+    echo "-a  attempts before sleep"
+    echo "-l  lockout reset minutes"
+    echo "-h  show this help message"
+    exit 0
+}
+
+while getopts "t:d:u:p:a:l:h" opt; do
+    case $opt in
+        t) TARGET=$OPTARG ;;
+        d) DOMAIN=$OPTARG ;;
+        u) USERFILE=$OPTARG ;;
+        p) PASSFILE=$OPTARG ;;
+        a) MAX_ATTEMPTS=$OPTARG ;;
+        l) LOCKOUT_MIN=$OPTARG ;;
+        h) print_help ;;
+        *) print_help ;;
+    esac
+done
 
 BUFFER=30
 LOCKOUT_SEC=$((LOCKOUT_MIN * 60 + BUFFER))
