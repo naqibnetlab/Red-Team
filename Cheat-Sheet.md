@@ -220,16 +220,71 @@ Password: <it will be same password as your kali password>
 4. Upload the JSON files
 ```
 # Section 4. Delivery
+ - Delivering Files via SSH/SCP
+```
+# Note: It requires SSH on the machines
+# Syntax: scp <source file> <destination file>
+# scp payload.txt user@target:/path/to/destination
+
+# Example:
+scp payload.txt bob@10.5.10.50:/home/bob
+```
+ - Delivering Files via SSH/rsync
+```
+# Note: It requires SSH on the machines
+# Syntax: rsync -avz payload.txt user@target:/path/to/destination
+
+# Example:
+rsync –azv /opt/linpeas/linpeas.sh mlandry@10.129.2.29:/tmp
+```
+- Delivering Files via xfreerdp
+```
+# Syntax: xfreerdp3 /v:target_ip /u:username /p:password /d:domain-name /dynamic-resolution /drive:shared,/path/to/local/files
+# /drive: Shares a local directory with the target.
+# Connect to the target via RDP.
+# Access the shared drive from the target machine (e.g., \\tsclient\shared).
+# Copy files from the shared drive to the target.
+
+# Example:
+xfreerdp3 /v:10.5.10.50 /u:mark.landry /p:987654321 /dynamic-resolution /drive:shared,/home/kali/
+```
+ - Delivering Files via SMB
+```
+1. Using SMBclient: smbclient //target_ip/sharename -U username
+# Authenticate and use "put" to upload files.
+# Example:
+smbclient //10.129.2.28/all –U Guest
+smb: \> put shell.exe
+
+2. Mounting SMB Share: sudo mount –t cifs //target_ip/sharename /mnt –o username=user,password=pass
+#  Then copy files to /mnt to deliver them to the target.
+# Example:
+sudo mount –t cifs //10.129.2.28/all /mnt –o username=mark.landry,password=987654321
+sudo cp /opt/winpeas/winPEASany.exe /mnt
+```
+ - Delivering Files via Web Form
+```
+1. Identify a file upload form on the target website.
+2. Upload a malicious file (e.g., .php, .jpg with embedded code).
 ```
 
-
-
-```
-# Section 5. Privilege Escalation
+# Section 5. Attacks
 ```
 COMING SOON...
 ```
-# Section 6. Miscellaneous
+
+# Section 6. Privilege Escalation
+## Windows Privilege Escalation
+```
+COMING SOON...
+```
+## Linux Privilege Escalation
+```
+COMING SOON...
+```
+
+
+# Section 7. Miscellaneous
 ### Wordlists
 ```
 /usr/share/wordlists/rockyou.txt                                  # Password Cracking Wordlist
