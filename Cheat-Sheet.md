@@ -266,7 +266,7 @@ rsync –azv /opt/linpeas/linpeas.sh mlandry@10.129.2.29:/tmp
 # Copy files from the shared drive to the target.
 
 # Example:
-xfreerdp3 /v:10.5.10.50 /u:mark.landry /p:987654321 /dynamic-resolution /drive:shared,/home/kali/
+xfreerdp3 /v:10.5.10.30 /u:mark /p:987654321 /d:practice.local /dynamic-resolution /drive:shared,/home/kali/
 ```
  - Delivering Files via SMB
 ```
@@ -276,10 +276,10 @@ xfreerdp3 /v:10.5.10.50 /u:mark.landry /p:987654321 /dynamic-resolution /drive:s
 smbclient //10.129.2.28/all –U Guest
 smb: \> put shell.exe
 
-2. Mounting SMB Share: sudo mount –t cifs //target_ip/sharename /mnt –o username=user,password=pass
+2. Mounting SMB Share: sudo mount -t cifs //target_ip/sharename /mnt -o username=user,password=pass
 #  Then copy files to /mnt to deliver them to the target.
 # Example:
-sudo mount –t cifs //10.129.2.28/all /mnt –o username=mark.landry,password=987654321
+sudo mount -t cifs //10.129.2.28/all /mnt -o username=mark.landry,password=987654321
 sudo cp /opt/winpeas/winPEASany.exe /mnt
 ```
  - Delivering Files via Web Form
