@@ -243,10 +243,11 @@ Password: <it will be same password as your kali password>
 ```
 # Note: It requires SSH on the machines
 # Syntax: scp <source file> <destination file>
-# scp payload.txt user@target:/path/to/destination
+# scp user@target:/path/to/destination payload.exe
 
 # Example:
-scp payload.txt bob@10.5.10.50:/home/bob
+scp bob@10.5.10.50:/home/bob payload.exe
+scp payload.exe administrator@10.5.10.30:/C:/Users/Administrator/Desktop/users.txt
 ```
  - Delivering Files via SSH/rsync
 ```
@@ -287,12 +288,7 @@ sudo cp /opt/winpeas/winPEASany.exe /mnt
 2. Upload a malicious file (e.g., .php, .jpg with embedded code).
 ```
 
-# Section 5. Attacks
-```
-COMING SOON...
-```
-
-# Section 6. Privilege Escalation
+# Section 5. Privilege Escalation
 ## Windows Privilege Escalation
 ```
 COMING SOON...
@@ -303,7 +299,7 @@ COMING SOON...
 ```
 
 
-# Section 7. Miscellaneous
+# Section 6. Miscellaneous
 ### Wordlists
 ```
 /usr/share/wordlists/rockyou.txt                                  # Password Cracking Wordlist
