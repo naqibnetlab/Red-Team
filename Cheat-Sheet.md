@@ -357,6 +357,50 @@ Peass
 ```
 /usr/share/peass
 ```
+### Windows Services
+- Check service status
+```
+# Get specific service
+Get-Service -Name sshd
+
+# Get only the status value
+(Get-Service -Name sshd).Status
+```
+- Service control commands
+```
+# Stop service
+net stop sshd
+Stop-Service -Name sshd
+
+# Start service
+net start sshd
+Start-Service -Name sshd
+
+# Restart service
+Restart-Service -Name sshd
+```
+- List services
+```
+# All services
+Get-Service
+
+# Only running services
+Get-Service | Where-Object { $_.Status -eq 'Running' }
+
+# Filter by display name
+Get-Service | Where-Object { $_.DisplayName -like "*sshd*" }
+```
+- Change service type
+```
+# Set to Manual
+Set-Service -Name "sshd" -StartupType Manual
+
+# Set to Disabled
+Set-Service -Name "sshd" -StartupType Disabled
+
+# Set to Automatic
+Set-Service -Name "sshd" -StartupType Automatic
+```
 
 
 
