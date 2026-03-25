@@ -61,6 +61,10 @@ Files Generated: scan_results.nmap, scan_results.gnmap, scan_results.xm
 ```
 - Nmap Recommended Scans
 ```
+1. Fast:
+sudo nmap –A -iL hosts.txt
+
+2. Robust:
 sudo nmap –A --script vuln –vv –p-–oX target_scan.xml –iL hosts.txt –-min-rate 5000 –-stats-every=5s
 
 -A means –sV –sC –O
