@@ -86,6 +86,7 @@ nxc <protocol> <ip address> <options>
 ```
   - NetExec User Enumeration 
 ```
+nxc smb 10.129.2.28 –u '' –p '' --users                            # lists users
 nxc smb 10.129.2.28 –u '' –p '' –-rid-brute                        # use this if you don't know about any existing users
 nxc smb 10.129.2.28 –u 'Guest' –p '' –-rid-brute                   # use the command with the Guest default account if the first command didn't work
 nxc smb 10.129.2.28 –u 'john' –p 'Pass123' –-rid-brute             # use this if you know a username and it's password on the target
