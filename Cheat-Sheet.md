@@ -46,6 +46,12 @@ After adding you text or editing the file, press "ctrl+s" to save the file.
 Step 3.
 Press "ctrl+x" to exit.
 ```
+## Download a file in terminal
+```
+curl http://192.168.1.113/.ssh/id_rsa -o id_rsa
+wget http://192.168.1.113/.ssh/id_rsa
+```
+
 ---
 
 # Section 2. Rconnaissance
@@ -160,7 +166,8 @@ sudo enum4linux -a -A 192.168.220.30
 ```
 # SMB loging if you know a user name and password
 smbclient -U <username> //<ip>/<share>
-Example: smbclient -U student //10.5.10.30/po-shares
+Example: smbclient -U student //10.5.10.30/share
+Example2: smbclient //192.168.1.132/share -U john@practice.local
 
 # SMB null authentication (try that if you want to login without username and password)
 smbclient //<ip>/<share> -N
