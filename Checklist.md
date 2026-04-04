@@ -125,8 +125,6 @@ See the [Actions on Objective](https://github.com/naqibnetlab/Red-Team/blob/main
 > - If you already have **administrator/root access**, you can skip the privilege escalation steps.  
 > - The **ultimate goal is service disruption**, so prioritize disabling services when possible.
 
----
-
 ## 1. Privilege Escalation
 
 ### Windows
