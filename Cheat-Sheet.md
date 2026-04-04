@@ -362,6 +362,24 @@ evil-winrm -i TARGET_IP -u USERNAME -p PASSWORD
 evil-winrm -i 192.168.1.222 -u john -p my-pass
 ```
 
+### smbclient
+```
+# SMB loging if you know a user name and password
+smbclient -U <username> //<ip>/<share>
+Example: smbclient -U student //10.5.10.30/share
+Example2: smbclient //192.168.1.132/share -U john@practice.local
+
+# SMB null authentication (try that if you want to login without username and password)
+smbclient //<ip>/<share> -N
+Example: smbclient //10.5.10.30/po-shares -N
+
+# Download a file from target to your machine:
+smb: \> get <FILE-NAME>
+
+# Upload a file to the target from your machine:
+smb: \> put <FILE-NAME>
+```
+
  - **Reverse Shells**
 ```bash
 # What is a reverse shell?
