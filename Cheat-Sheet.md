@@ -411,6 +411,9 @@ ssh -i id_rsa user@target
 # Example:
 ssh -i id_rsa john@192.168.2.20
 
+# Important note: Make sure the SSH key has the correct permission before connecting:
+chmod 600 id_rsa
+
 # 2. If you have a password
 # Syntax:
 ssh user@target
