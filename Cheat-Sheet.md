@@ -1,10 +1,40 @@
-# Section 1. Linux Basics
-- ping
+# Section 1. Kali Linux Basics
+## Kali Linux Network Configuration (GUI)
+
+### Step 1. Open Network Settings
+- Click the Kali icon (top-left)
+- Search for Advanced Network Configuration
+- Open it
+
+### Step 2. Select Connection
+- Click Wired connection 1
+- Click the Settings (gear icon)
+
+### Step 3. Set Static IP
+- Go to IPv4 Settings
+- Change Method to Manual
+- Click Add and enter:
+  - IP Address: 10.5.5.5
+  - Netmask: 255.0.0.0
+  - Gateway: 10.0.0.1
+
+### Step 4. Add DNS and Domain
+- Add the IP address of the target Windows DC as your DNS Server: 192.168.1.111
+- Add the domain name of the target Windows DC as the Search Domain: practice.corp
+
+### Step 5. Save and Apply
+- Click Save
+- Reboot/restart your Kali or run below command in the terminal:
+```
+sudo systemctl restart NetworkManager
+```
+
+## ping
 ```
 ping <IP>                          # used to test the conectivity
 Example: ping 10.10.10.10          # test connectivity with the IP address of 10.10.10.10
 ```
-- nano
+## nano
 ```
 Step 1.
 nano <name of the file>            # create or edit a file
