@@ -37,7 +37,7 @@ sudo nmap -A --oX target_scan.xml -iL hosts.txt
 
 ## Enumeration (SMB / AD)
 
-- Use [enum4linux](https://github.com/naqibnetlab/Red-Team/blob/main/Cheat-Sheet.md#enum4linux) or [NetExec](https://github.com/naqibnetlab/Red-Team/blob/main/Cheat-Sheet.md#netexec)  
+- Use [enum4linux](https://github.com/naqibnetlab/Red-Team/blob/main/Cheat-Sheet.md#enum4linux) or [NetExec](https://github.com/naqibnetlab/Red-Team/blob/main/Cheat-Sheet.md#netexec) against Windows Machines
 
 - Enumerate and collect:
   - Usernames and save them to `users.txt`  
